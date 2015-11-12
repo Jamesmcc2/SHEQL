@@ -1,0 +1,1 @@
+<div style="font-family:Tahoma, Geneva, sans-serif; font-size:18px; color:#666666">Weclome. Please use the menu above to navigate. or click here to <a href="upload.php">Upload</a></div>
