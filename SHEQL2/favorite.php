@@ -42,7 +42,6 @@ if(isset($_SESSION['BrowseOn']))
 <th width="31%" align="center">Description</th>
 <th width="31%" align="center">Cost</th>
 <th width="10%" align="left">Favorite</th>
-<?php if(isset($_SESSION['user_id'])){?><th width="20%" align="center">Image</th><?php } ?>
 <th width="5%" align="center">Details</th>
 
 </tr>
@@ -79,9 +78,7 @@ $num=mysql_num_rows($result);
     
 	 <a href="<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>?a&unfav_id=<?=$data['pic_id'] ?>" class="btn btn-danger btn-sm" role="button"><span class="glyphicon glyphicon-heart"></span> Unfavorite</a>
 	<?php } ?></p></td>
-    <?php if(isset($_SESSION['user_id'])){?><td align="center"><a href="view.php?picture_id=<?=$data['pic_id'] ?>">
-    <img src="uploads/thumbs/<?=$img['file'] ?>" width="150" />
-     </a></td><?php } ?>
+
     <td align="center"><a  class="btn btn-default btn-sm" role="button" href="view.php?picture_id=<?=$data['pic_id'] ?>"><span class="glyphicon glyphicon-heart"></span> Details</a> </a></td>
 
   </tr> 

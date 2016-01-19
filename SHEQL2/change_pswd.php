@@ -1,27 +1,22 @@
 <? 
-  //Including top header file
-  include "includes/header.php";
-?>
-
+//Including top header file
+include "includes/header.php"; ?>
 <ol class="breadcrumb">
   <li><a href="index.php">Home</a></li>
   <li class="active">Change Password</li>
 </ol>
-
-<?
-  //If old password doesnt match
-  if(isset($_SESSION['MisMatchPsw']))
-  {
-?>
-    <div class="alert alert-danger">Old Password doesnt match.</div>
+<? 
+//If old password doesnt match
+if(isset($_SESSION['MisMatchPsw']))
+{
+?><div class="alert alert-danger">Old Password doesnt match.</div>
 <? unset($_SESSION['MisMatchPsw']);}?>
 
 <? 
 //If password is changed successfully
 if(isset($_SESSION['ChangedPsw']))
 {
-?>
-  <div class="alert alert-success">Password Changed Sucessfully.</div>
+?><div class="alert alert-success">Password Changed Sucessfully.</div>
 <? unset($_SESSION['ChangedPsw']);}?>
 <form action="formHandler.php" method="post" enctype="multipart/form-data" name="myform"  class="form-horizontal form-signin"  onsubmit="return validateForm()" role="form">
   <div class="form-group">

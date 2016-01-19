@@ -1,5 +1,5 @@
 <?php
-define("base_email", "admin@sheql.org");
+define("base_email", "admin@SHEQL.org");
 define("base_url", "http://sheql.org/demo/");
 
 
@@ -10,13 +10,13 @@ function validate($email,$user_id,$unique_id)
 	$to .= base_email;
 
 	// subject
-	$subject = 'Email Verification';
+	$subject = 'SHEQL - Email Verification';
 
 	// message
 	$message = '
 	<html>
 	<head>
-		  <title>Email Verification</title>
+		  <title>SHEQL - Email Verification</title>
 			</head>
 				<body>
   
@@ -45,7 +45,7 @@ function validate($email,$user_id,$unique_id)
 
 		// Additional headers
 		$headers .= 'To: User <'.$email.'>' . "\r\n";
-		$headers .= 'From: Image Upload <admin@sheql.org>' . "\r\n";
+		$headers .= 'From: SHEQL <admin@SHEQL.org>' . "\r\n";
 		$headers .= 'Cc: bill@example.com' . "\r\n";
 		$headers .= 'Bcc: iequals10@gmail.com' . "\r\n";
 
@@ -101,7 +101,7 @@ $message = '
 
 		// Additional headers
 		$headers .= 'To: User <'.$to.'>' . "\r\n";
-		$headers .= 'From: Image Upload <admin@sheql.org>' . "\r\n";
+		$headers .= 'From: SHEQL <admin@SHEQL.org>' . "\r\n";
 		$headers .= 'Cc: bill@example.com' . "\r\n";
 		$headers .= 'Bcc: iequals10@gmail.com' . "\r\n";
 // echo $message;
@@ -155,7 +155,7 @@ $message = '
 
 		// Additional headers
 		$headers .= 'To: User <'.$email.'>' . "\r\n";
-		$headers .= 'From: Image Upload <admin@sheql.org>' . "\r\n";
+		$headers .= 'From: SHEQL <admin@SHEQL.org>' . "\r\n";
 		$headers .= 'Cc: bill@example.com' . "\r\n";
 		$headers .= 'Bcc: iequals10@gmail.com' . "\r\n";
 // echo $message;
@@ -195,7 +195,7 @@ $message = '
 				<body>
   
 		  			<p>Congratulations '.$data['unique_id'].',</p>
-					<p>you are now registered with "SHEQL" and can search for and view all medical bill images</p>
+					<p>you are now registered with "SHEQL" and can search for and view all medical bills</p>
  
 		   <div>Please <a href="'.base_url.'login.php"> Log In </a>
    
@@ -217,7 +217,7 @@ $message = '
 
 		// Additional headers
 		$headers .= 'To: User <'.$email.'>' . "\r\n";
-		$headers .= 'From: Image Upload <admin@sheql.org>' . "\r\n";
+		$headers .= 'From: SHEQL <admin@SHEQL.org>' . "\r\n";
 		$headers .= 'Cc: bill@example.com' . "\r\n";
 		$headers .= 'Bcc: iequals10@gmail.com' . "\r\n";
 // echo $message;

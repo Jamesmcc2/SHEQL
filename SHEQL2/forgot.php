@@ -18,7 +18,7 @@ $submit = 'forgetPassword';
       </div>
       <div class="panel-body">
       <?php if(isset($_SESSION['errorEmail'])){?>
-      <div class="alert alert-danger">Email ID does not exist</div>
+      <div class="alert alert-danger">Email ID does not exist!</div>
       <?php unset($_SESSION['errorEmail']);} ?>
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Email Id</label>

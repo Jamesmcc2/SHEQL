@@ -13,6 +13,9 @@ if(isset($_REQUEST['logout']))
 	phpredirect("index.php");
 }
 
+//Returns 2 if super admin
+if(isset($_SESSION["user_id"]))
+$super=getData("super","sn_users",array("user_id", $_SESSION["user_id"]));
 
 function sbGet($data)
 {
@@ -24,7 +27,17 @@ function getData($column, $table, $from)
 	$query = "select `".$column."` from ".$table." where ".$from[0]."='".$from[1]."'";
 	$qry = new query();
 $post=$qry->querySelectSingle($query);
-echo $post[$column];
+return $post[$column];
+}
+
+function count_rows($table,$where,$i)
+{
+	if($i==0) $where ="";
+	else $where = "where `".$where[0]."`=".$where[1]." ";
+		$sqlcount = mysql_result(mysql_query("SELECT COUNT(*) FROM ".$table." ".$where), 0); 
+		
+		return $sqlcount;
+	
 }
 ?>
 
@@ -39,7 +52,7 @@ echo $post[$column];
     <meta name="author" content="">
     <link rel="icon" href="images/favicon.ico">
 
-    <title>Home</title>
+    <title>SHEQL - Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -113,7 +126,10 @@ echo $post[$column];
             
             
                <? if(isset($_SESSION['user_id'])){?>
-               <li><a href="#">Hello <? getData("firstname","sn_users",array("user_id", $_SESSION["user_id"]))?></a></li>
+               <li><a href="#">Hello <? echo getData("firstname","sn_users",array("user_id", $_SESSION["user_id"]));?></a></li>
+			   
+			   <? if($super == "2"){?>
+			   <li><a href="members.php">Members </a></li><? } ?>
                <li><a href="favorite.php">Favorites</a></li>
               
                <li><a href="records.php">Your Bills</a></li>

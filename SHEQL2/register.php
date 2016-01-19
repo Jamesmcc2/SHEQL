@@ -97,6 +97,7 @@ if(isset($_REQUEST["Register"]) && !empty(sbGet("Register")))
 	$f_sql = mysql_query("SELECT COUNT(*) FROM sn_users WHERE email='$email'");
 	$email_count = mysql_result($f_sql, 0); 
 
+	$sqlcount = mysql_result(mysql_query("SELECT COUNT(*) FROM sn_users"), 0); 
 	
 	if($email_count>0)
 	{	//if email already exists
@@ -104,13 +105,16 @@ if(isset($_REQUEST["Register"]) && !empty(sbGet("Register")))
 	}
 	else
 	{
+		if($sqlcount==0) $super_admin=2;
+		else $super_admin = 1;
 	//if email doesnt exists register
 	$results=$qry->queryExecute("INSERT INTO `sn_users` (
 `password` ,
 `email` ,
-`unique_id`
+`unique_id`,
+`super`
 )
-VALUES ('".$encrypted_password."', '".$email."','".$kid."')");
+VALUES ('".$encrypted_password."', '".$email."','".$kid."','".$super_admin."')");
 
 
 		$query = "select * from  sn_users where email='$email'";

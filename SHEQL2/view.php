@@ -14,23 +14,32 @@ $data=$qry->querySelectSingle($query);
           cursor: pointer;
       }</style>
 <div class="row">
-<? if(isset($_SESSION['user_id'])){?>
-<div class="col-md-4">
-<div class="container">
-     <ul class="row">
-   
- 
 
-    <?
-		//Retrieving images associated with that bill
-		$queryData="Select *from sn_images where picture_id='".$data['pic_id']."' ";
-			$qry_all_prod=$qry->querySelect($queryData);
-			foreach($qry_all_prod as $prod)
-			{?> <li style="list-style:none; padding:0px;" class="col-lg-12"> <img class="thumbnail" src="uploads/thumbs/<?=$prod['file'] ?>"></li><? } ?>
-        </ul>
-</div>
+<div class="col-md-4">
+<form action="formHandler.php" method="post" enctype="multipart/form-data" name="myform"   onsubmit="return validateForm()" role="form">
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-4 control-label">Email</label>
+    <div class="col-sm-8">
+       <input name="email" type="text" class="form-control" id="inputPassword" value="<? echo getData("email","sn_users",array("user_id", $_SESSION["user_id"])); ?>" placeholder="Password" required>
     </div>
-<? }?>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-4 control-label">Message</label>
+    <div class="col-sm-8">
+      <textarea name="message" rows="10" required="required" class="form-control" id="message" title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.pwd2.pattern = this.value; " pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"></textarea>
+    </div>
+  </div>
+  <div class="form-group"></div>
+  <input name="user_id" type="hidden" value="<?=$data['user_id'] ?>" />
+  <input name="pic_id" type="hidden" value="<? echo sbGet('picture_id'); ?>" />
+  <div class="form-group">
+    <div align="right" class="col-sm-offset-2 col-sm-8">
+    <input name="contactUser" type="submit" class="btn btn-default" id="contactUser" value="Message">
+    </div>
+  </div>
+</form>
+  </div>
+
 <div class="col-md-8">
 
 <table width="200" border="1" class="table table-striped">
@@ -39,7 +48,7 @@ $data=$qry->querySelectSingle($query);
     <td><?=$data['description']?></td>
     </tr>
   <tr>
-    <td>Medical Code</td>
+    <td>Billing Code</td>
     <td>
       <?=$data["medical_code"]?>
     </td>

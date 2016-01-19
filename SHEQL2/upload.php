@@ -198,7 +198,7 @@ if(isset($_REQUEST["Upload"]))
 <?php if(isset($_REQUEST['done'])){?>Uploaded Successfully<?php }?>
 
 <form action="?" method="post" enctype="multipart/form-data" name="myform"   onsubmit="return validateForm()"  class="form-horizontal form-signin" role="form"><div class="form-group">
-  <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Description of Care</label>
+  <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Description</label>
     <div class="col-sm-8">
       <textarea  maxlength="40" name="description" class="form-control" id="description" placeholder="Title" required="required"></textarea>
     </div>
@@ -216,9 +216,9 @@ if(isset($_REQUEST["Upload"]))
     </div>
   </div>
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Billing Code</label>
+    <label for="inputEmail3" class="col-sm-4 control-label"> Billing Code</label>
     <div class="col-sm-8">
-      <textarea  maxlength="40" name="medical_code" class="form-control" id="medical_code" placeholder="Medical Code" required="required"></textarea>
+      <textarea  maxlength="40" name="medical_code" class="form-control" id="medical_code" placeholder="Billing Code"></textarea>
     </div>
   </div>
   <div class="form-group">
@@ -237,7 +237,7 @@ if(isset($_REQUEST["Upload"]))
   <div class="form-group">
   <label for="inputEmail3" class="col-sm-4 control-label">Date</label>
     <div class="col-sm-8">
-      <input name="date" class="datepicker form-control" id="date" placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd">
+      <input name="date" class="form-control" id="date" placeholder="yyyy-mm-dd" type="date">
     </div>
   </div>
   <div class="form-group">

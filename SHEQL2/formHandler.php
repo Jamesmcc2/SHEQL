@@ -13,7 +13,12 @@ function quickUpdate($table, $data, $ID)
 		echo $i;
 		for ($k=0; $k<$i; $k++)
 		{
-		$query.= "`".$data[$k]."` ='".sbGet($data[$k])."' ";
+			if($data[$k]=="password") 
+				$upData=md5(sbGet($data[$k]));
+			else
+				$upData=sbGet($data[$k]);
+			
+		$query.= "`".$data[$k]."` ='".$upData."' ";
 		
 
 		
@@ -22,7 +27,7 @@ function quickUpdate($table, $data, $ID)
 		}
 	}
 	$qry=new query;
-	$query .=" where ".$ID." = '".$_SESSION[$ID]."';";
+	$query .=" where ".$ID[0]." = '".$ID[1]."';";
 	
 
 	$results=$qry->queryExecute($query);
@@ -55,13 +60,13 @@ $row=mysql_fetch_array($result);
 if(mysql_num_rows($result)>0)
 {
 	//Header Information
-	$to = 'bob@example.com';
+	$to = 'admin@SHEQL.org';
 
-$subject = 'Website Change Request';
+$subject = 'SHEQL: Website Change Request';
 
-$headers = "From: info@domain.com \r\n";
+$headers = "From: admin@SHEQL.org \r\n";
 $headers .= "Reply-To: ". $email . "\r\n";
-$headers .= "CC: info@example.com\r\n";
+$headers .= "CC: iequals10@gmail.com\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
@@ -176,7 +181,7 @@ if(isset($_REQUEST["updateAccount"]))
 
 $data = array("firstname","middlename","lastname","address","zip","email");
 $table= "sn_users";
-quickUpdate($table, $data, "user_id");
+quickUpdate($table, $data, array("user_id",$_SESSION['user_id']));
 
 
 $_SESSION['updateProfile']=1;	
@@ -186,7 +191,48 @@ phpredirect("account.php");
 
 
 	
+//Change Password//
+if(isset($_REQUEST["updateMember"]))
+{
+	
+if(sbGet("password")=="")
+$data = array("firstname","middlename","lastname","address","zip","email");
+else
+$data = array("firstname","middlename","lastname","address","zip","email", "password");
+$table= "sn_users";
+quickUpdate($table, $data, array("user_id",sbGet('members_user_id')));
 
+
+$_SESSION['updateProfile']=1;	
+phpredirect("editMembers.php?user_id=".sbGet('members_user_id'));
+	
+}
+
+
+//Php code to delete from databse
+if(isset($_REQUEST['deleteMembers']))
+{		
+
+		$sql="DELETE FROM  sn_users WHERE user_id='".sbGet('user_id')."'";
+ 		$qry->queryDelete($sql);
+		$sql="DELETE FROM  sn_pictures WHERE user_id='".sbGet('user_id')."'";
+ 		$qry->queryDelete($sql);
+ 		phpredirect("members.php");
+
+  
+}	
+
+//Php code to delete from databse
+if(isset($_REQUEST['deleteBills']))
+{		
+
+		$sql="DELETE FROM  sn_pictures WHERE pic_id='".sbGet('pic_id')."'";
+ 		$qry->queryDelete($sql);
+ 		phpredirect("members.php");
+
+  
+}		
+	
 
 //Php code to delete from databse
 if(isset($_REQUEST['del_id']))
@@ -202,4 +248,27 @@ if(isset($_REQUEST['del_id']))
   
 }
 
+
+
+if(isset($_REQUEST['contactUser']))
+{
+					//Header Information
+					$to =  getData("email","sn_users",array("user_id", sbGet("user_id")));
+					$email = sbGet("email");
+					$subject = 'Website Change Request';
+
+					$headers = "From: info@domain.com \r\n";
+					$headers .= "Reply-To: ". $email . "\r\n";
+					$headers .= "CC: info@example.com\r\n";
+					$headers .= "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+					//message
+
+					$message=sbGet("message");
+
+					mail($to, $subject, $message, $headers);
+				phpalert("Message Sent Successfully!");
+			phpredirect("view.php?picture_id=".sbGet("pic_id"));
+}
 ?>

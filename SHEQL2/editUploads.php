@@ -157,7 +157,57 @@ if(isset($_REQUEST["Upload"]))
 	$picture_id=$img['pic_id'];
 	$folder="uploads";
 
+/*
+	//Check if there are any files ready for upload
+	if(isset($_FILES['uploaded_files']))
+	{
+		//For each file get the $key so you can check them by their key value
+		foreach($_FILES['uploaded_files']['name'] as $key => $value)
+	{
+	
+		//If the file was uploaded successful and there is no error
+		if(is_uploaded_file($_FILES['uploaded_files']['tmp_name'][$key]) &&	$_FILES['uploaded_files']['error'][$key] == 0)
+        {
+            
+			//Create an unique name for the file using the current timestamp, an random number and the filename			
+			$filename = $_FILES['uploaded_files']['name'][$key];
+            $filename = time().rand(0,999).$filename;
+            
+			//Check if the file was moved
+			if(move_uploaded_file($_FILES['uploaded_files']['tmp_name'][$key], $folder.'/' . $filename))
+            {	// *** 1) Initialise / load image
+				$createThumbs = new resize($folder.'/' . $filename);
 
+				// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+				$createThumbs -> resizeImage(200, 120, 'crop');
+
+				// *** 3) Save image
+				$createThumbs -> saveImage($folder.'/thumbs/' . $filename, 100);
+	
+	
+	
+				$results=$qry->queryExecute("insert into sn_images(file,picture_id) values('$filename','$pic_id')");
+                echo '<div class="alert alert-success">The file ' . $_FILES['uploaded_files']['name'][$key].' was uploaded successful <br/></div>';
+            }
+            else
+			{
+			echo move_uploaded_file($_FILES['uploaded_files']['tmp_name'][$key],$folder. $filename);
+			//	echo '<div class="alert alert-danger">The file was not moved.</div>';
+            }
+				
+        }
+		else
+        {
+		//	echo '<div class="alert alert-danger">The file was not uploaded.</div>';
+        }
+	}
+	
+	
+	phpredirect("?pic_id=".$pic_id);
+}
+
+
+*/
 //now validating the username and password
 $sql="SELECT user_id FROM  sn_pictures WHERE user_id='".$user_id."'";
 
@@ -213,9 +263,22 @@ Uploaded Successfully<? }?>
     </div>
   </div>
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span>  Medical Code</label>
+    <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Keywords</label>
     <div class="col-sm-8">
-      <textarea  maxlength="40" name="medical_code" class="form-control" id="medical_code" placeholder="Medical Code" required="required"><?=$post['medical_code']?></textarea>
+      <textarea   maxlength="140" class="form-control" name="keywords" id="inputEmail3" placeholder="Keywords"><?=$post['keywords']?></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+  <label for="inputEmail3" class="col-sm-4 control-label">Physician</label>
+    <div class="col-sm-8">
+      <textarea   maxlength="40" name="physician" class="form-control" id="physician" placeholder="Physician"><?=$post['physician']?></textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Billing Code</label>
+    <div class="col-sm-8">
+      <textarea  maxlength="40" name="medical_code" class="form-control" id="medical_code" placeholder="Medical Code"><?=$post['medical_code']?></textarea>
     </div>
   </div>
   <div class="form-group">
@@ -233,8 +296,11 @@ Uploaded Successfully<? }?>
 
   <div class="form-group">
   <label for="inputEmail3"  class="col-sm-4 control-label">Date</label>
-    <div class="col-sm-8">
-      <input name="date" value="<?=$post['date']?>" class="datepicker form-control" id="date" placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd">
+    <div class="col-sm-8"><? $originalDate = $post['date'];
+$newDate = date("Y-m-d", strtotime($originalDate));
+
+?>
+      <input name="date" type="date" value="<?php echo $newDate; ?>" class="form-control" id="date">
     </div>
   </div>
   <div class="form-group">
@@ -244,19 +310,19 @@ Uploaded Successfully<? }?>
     </div>
   </div>
   
+  <!--
   <div class="form-group">
-  <label for="inputEmail3" class="col-sm-4 control-label">Physician</label>
-    <div class="col-sm-8">
-      <textarea   maxlength="40" name="physician" class="form-control" id="physician" placeholder="Physician"><?=$post['physician']?></textarea>
-    </div>
-  </div>
+  
+    <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Image</label>
+    <div class="col-sm-7 input_holder">
 
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label"><span class="red">*</span> Keywords</label>
-    <div class="col-sm-8">
-      <textarea   maxlength="140" class="form-control" name="keywords" id="inputEmail3" placeholder="Keywords"><?=$post['keywords']?></textarea>
-    </div>
+        <input  class="form-control" name="uploaded_files[]" type="file" id="input_clone">
+    </div><div class="col-sm-1">
+  <span class="add_field">+</span>
+<span class="remove_field">-</span>
+</div>
   </div>
+-->
   <div class="form-group">
     <div align="right" class="col-sm-offset-2 col-sm-8">
     <input name="Upload" type="submit" class="btn btn-default" id="Upload" value="Upload">

@@ -14,7 +14,7 @@ $user_id=htmlspecialchars(sbGet('user_id'),ENT_QUOTES);
 $pass=md5(sbGet('password'));
 
 //now validating the username and password
-$sql="SELECT unique_id, password FROM  sn_users WHERE unique_id='".$user_id."' AND password='".$pass."' AND status>=1";
+$sql="SELECT unique_id, password FROM  sn_users WHERE unique_id='".$user_id."' AND password='".$pass."' AND status=0";
 
 
 $result=mysql_query($sql);
@@ -22,27 +22,39 @@ $row=mysql_fetch_array($result);
 
 //if username exists
 if(mysql_num_rows($result)>0)
-{
-	//compare the password
-	if(strcmp($row['password'],$pass)==0)
+{ 	
+	echo "<div class=\"alert alert-success\" role=\"alert\">Please validate your account before login.</div>"; //Invalid Login
+}else
 	{
-			echo "<div class=\"alert alert-success\" role=\"alert\">Login Successful.</div>"; //Invalid Login
-		phpredirect("index.php");
-		
-		//now set the session from here if needed
-		
-		
-		$query = "select * from  sn_users where  unique_id='".$user_id."' AND password='".$pass."' ";
-		$data = $qry->querySelectSingle($query);
-		$_SESSION['user_name']=$data['user_name']; 
-		$_SESSION['user_id']=$data['user_id'];
-		$_SESSION['BrowseOn']=1;
+				$sql="SELECT unique_id, password FROM  sn_users WHERE unique_id='".$user_id."' AND password='".$pass."' AND status>=0";
+				$result=mysql_query($sql);
+				$row=mysql_fetch_array($result);
+				if(mysql_num_rows($result)>0)
+				{ 	
+						//compare the password
+						if(strcmp($row['password'],$pass)==0)
+						{
+								echo "<div class=\"alert alert-success\" role=\"alert\">Login Successful.</div>"; //Invalid Login
+							phpredirect("index.php");
+							
+							//now set the session from here if needed
+							
+							
+							$query = "select * from  sn_users where  unique_id='".$user_id."' AND password='".$pass."' ";
+							$data = $qry->querySelectSingle($query);
+							$_SESSION['user_name']=$data['user_name']; 
+							$_SESSION['user_id']=$data['user_id'];
+							$_SESSION['BrowseOn']=1;
+						}	
+						else
+							echo "<div class=\"alert alert-danger\" role=\"alert\">Incorrect Username or Password</div>"; //Invalid Login
+					
+				}
+				else
+						echo "<div class=\"alert alert-danger\" role=\"alert\">Incorrect Username or Password</div>"; //Invalid Login
 	}
-	else
-	echo "<div class=\"alert alert-danger\" role=\"alert\">Incorrect Username or Password</div>"; //Invalid Login
-}
-else
-	echo "<div class=\"alert alert-danger\" role=\"alert\">Incorrect Username or Password</div>"; //Invalid Login
+
+
 
 
 }

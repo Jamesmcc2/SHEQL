@@ -29,7 +29,7 @@ if(isset($_REQUEST["fav_id"]))
     <div class="col-sm-8">
     <select class="form-control" name="s" id="s">
       <option value="description">Description</option>
-      <option value="medical_code">Medical Code</option>
+      <option value="medical_code">Billing Code</option>
       <option value="zip_code">Zip Code</option>
       <option value="keywords">Keywords</option>
     </select></div>
@@ -70,8 +70,7 @@ if(isset($_REQUEST["fav_id"]))
 <th width="3%" align="center">SN. </th>
 <th width="31%" align="center">Description</th>
 <th width="31%" align="center">Cost</th>
-<?php if(isset($_SESSION['user_id'])){?><th width="10%" align="left">Favorite</th>
-<th width="20%" align="center">Image</th><?php } ?>
+<?php if(isset($_SESSION['user_id'])){?><th width="10%" align="left">Favorite</th><?php } ?>
 <th width="5%" align="center">Details</th>
 
 </tr>
@@ -109,9 +108,7 @@ $num=mysql_num_rows($result);
     
 	 <a href="<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";?>&unfav_id=<?=$data['pic_id'] ?>" class="btn btn-danger btn-sm" role="button"><span class="glyphicon glyphicon-heart"></span> Unfavorite</a>
 	<?php } ?></p></td>
-<td align="center"><a href="view.php?picture_id=<?=$data['pic_id'] ?>">
-    <img src="uploads/thumbs/<?=$img['file'] ?>" width="150" />
-     </a></td><?php } ?>
+<?php } ?>
     <td align="center"><a  class="btn btn-default btn-sm" role="button" href="view.php?picture_id=<?=$data['pic_id'] ?>"><span class="glyphicon glyphicon-heart"></span> Details</a> </a></td>
 
   </tr> 
