@@ -255,20 +255,26 @@ if(isset($_REQUEST['contactUser']))
 					//Header Information
 					$to =  getData("email","sn_users",array("user_id", sbGet("user_id")));
 					$email = sbGet("email");
-					$subject = 'Website Change Request';
+					$subject = 'SHEQL: Message regarding your bill';
 
-					$headers = "From: info@domain.com \r\n";
+					$headers = "From: admin@SHEQL.org \r\n";
 					$headers .= "Reply-To: ". $email . "\r\n";
-					$headers .= "CC: info@example.com\r\n";
+					$headers .= "CC: bill@example.com\r\n";
 					$headers .= "MIME-Version: 1.0\r\n";
 					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 					//message
 
-					$message=sbGet("message");
+					$message = sbGet("message");
 
-					mail($to, $subject, $message, $headers);
-				phpalert("Message Sent Successfully!");
-			phpredirect("view.php?picture_id=".sbGet("pic_id"));
+					if (!strlen(trim($message))){
+						phpalert("There is no text provided. Going back...");
+						phpredirect("view.php?picture_id=".sbGet("pic_id"));
+						exit();
+					} else {
+						mail($to, $subject, $message, $headers);
+						phpalert("Message Sent Successfully!");
+						phpredirect("view.php?picture_id=".sbGet("pic_id"));
+					}
 }
 ?>

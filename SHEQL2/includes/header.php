@@ -120,7 +120,7 @@ function count_rows($table,$where,$i)
             <ul class="nav navbar-nav">
 
               <li><? if(isset($_SESSION['BrowseOn'])){?><a href="search.php">Search</a></li>
-              <li><a href="upload.php">Upload</a></li><? } ?>
+              <? } ?>
             </ul>
             <ul class="nav navbar-nav navbar-right"> 
             

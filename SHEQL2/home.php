@@ -20,7 +20,7 @@ if(isset($_REQUEST["fav_id"]))
   
   <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h2>Search        </h2>
+        <h2>Search</h2>
         <form name="form1" class="form-horizontal"  method="get" action="">
          <div class="col-sm-4">
       <input name="q" type="search" class="form-control" id="inputEmail3" placeholder="search"></div>
@@ -28,10 +28,10 @@ if(isset($_REQUEST["fav_id"]))
     <label for="inputEmail3" class="col-sm-4 control-label">Search By </label>
     <div class="col-sm-8">
     <select class="form-control" name="s" id="s">
+      <option value="keywords" >Keywords</option>
       <option value="description">Description</option>
       <option value="medical_code">Billing Code</option>
-      <option value="zip_code">Zip Code</option>
-      <option value="keywords">Keywords</option>
+      <option value="facility_zip_code">Zip Code</option>
     </select></div>
          </div>
      <div class="col-sm-2">
@@ -51,7 +51,7 @@ if(isset($_REQUEST["fav_id"]))
 	$count=1;
 		$q=$_GET['q'];
 		$searchby = $_GET['s'];
-		$queryData="Select *from sn_pictures where ".$searchby." LIKE '%".$q."%' 
+		$queryData="Select * from sn_pictures where ".$searchby." LIKE '%".$q."%' 
 						order by `cost` desc ";
 
 		$num = $qry->numRows($queryData); 
@@ -67,11 +67,17 @@ if(isset($_REQUEST["fav_id"]))
     <table width="100%" border="0" class="table table-striped">
 
 <tr>
-<th width="3%" align="center">SN. </th>
-<th width="31%" align="center">Description</th>
-<th width="31%" align="center">Cost</th>
-<?php if(isset($_SESSION['user_id'])){?><th width="10%" align="left">Favorite</th><?php } ?>
-<th width="5%" align="center">Details</th>
+<th width="2%" align="center">SN. </th>
+<th width="10%" align="center">Description</th>
+<th width="15%" align="center">Keywords</th>
+<th width="10%" align="center">Zipcode</th>
+<th width="10%" align="center">Cost</th>
+
+<?php if(isset($_SESSION['user_id'])){?>
+  <th width="5%" align="right">Favorite</th> 
+<?php } ?>
+
+<th width="5%" align="right">Details</th>
 
 </tr>
 
@@ -99,6 +105,8 @@ $num=mysql_num_rows($result);
 				?>   <tr>
                 <td align="left"><?php echo $count;?></td>
     <td align="left"><a href="view.php?picture_id=<?=$data['pic_id'] ?>"><?=$data['description']?></a></td>
+    <td align="left"><a href="view.php?picture_id=<?=$data['pic_id'] ?>"><?=$data['keywords']?></a></td>
+    <td align="left"><a href="view.php?picture_id=<?=$data['pic_id'] ?>"><?=$data['facility_zip_code']?></a></td>
     <td align="left"><a href="view.php?picture_id=<?=$data['pic_id'] ?>">
       <?=$data['cost']?>
     </a></td>

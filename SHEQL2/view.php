@@ -16,25 +16,31 @@ $data=$qry->querySelectSingle($query);
 <div class="row">
 
 <div class="col-md-4">
-<form action="formHandler.php" method="post" enctype="multipart/form-data" name="myform"   onsubmit="return validateForm()" role="form">
+<form action="formHandler.php" method="post" enctype="multipart/form-data" name="myform"   onsubmit="return checkTextField(this)" role="form">
   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-4 control-label">Email</label>
+    <label for="inputPassword3" class="col-sm-4 control-label">Your Email</label>
     <div class="col-sm-8">
-       <input name="email" type="text" class="form-control" id="inputPassword" value="<? echo getData("email","sn_users",array("user_id", $_SESSION["user_id"])); ?>" placeholder="Password" required>
+       <input name="text" type="text" class="form-control" id="inputPassword" value="<? echo getData("email","sn_users",array("user_id", $_SESSION["user_id"])); ?>" placeholder="Your Email" required>
     </div>
   </div>
+  <br/>
+  <br/>
   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-4 control-label">Message</label>
+    <label for="text" class="col-sm-4 control-label"></label>
     <div class="col-sm-8">
-      <textarea name="message" rows="10" required="required" class="form-control" id="message" title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" onchange=" this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.pwd2.pattern = this.value; " pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"></textarea>
+      <textarea type = "text" name="message" rows="10" required="required" class="form-control" id="message" placeholder = "Type your message" title="Enter your message to the bill owner to communicate further." onblur="checkTextField(this);" ></textarea>
     </div>
   </div>
+
   <div class="form-group"></div>
   <input name="user_id" type="hidden" value="<?=$data['user_id'] ?>" />
   <input name="pic_id" type="hidden" value="<? echo sbGet('picture_id'); ?>" />
+
   <div class="form-group">
     <div align="right" class="col-sm-offset-2 col-sm-8">
-    <input name="contactUser" type="submit" class="btn btn-default" id="contactUser" value="Message">
+
+  <br/>
+    <input name="contactUser" type="submit" class="btn btn-default" id="contactUser" value="Send message">
     </div>
   </div>
 </form>
@@ -127,6 +133,15 @@ $data=$qry->querySelectSingle($query);
 
 
 
+<script>
+
+function checkTextField(field) {
+    if (!str.replace(/\s/g, '').length) {
+        alert("Field is empty");
+    }
+}
+
+</script>
 
 <?
 //Including bottom footer file
